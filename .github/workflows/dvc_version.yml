@@ -37,8 +37,10 @@ jobs:
       - name: DVC add new batches
         run: |
           for f in online_batches/*.csv; do
+            git rm --cached "$f"
             dvc add "$f"
           done
-          git add online_batches/*.dvc online_batches/.gitignore
+          echo "online_batches/*.csv" >> .gitignore
+          git add online_batches/*.dvc online_batches/.gitignore .gitignore
           git commit -m "dvc: version new batch" || echo "Nothing to commit"
           git push
