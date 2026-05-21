@@ -3,7 +3,7 @@ name: DVC version new batch
 on:
   push:
     paths:
-      - 'production_batches/*.csv'
+      - 'online_batches/*.csv'
 
 jobs:
   dvc-add:
@@ -39,4 +39,6 @@ jobs:
           for f in online_batches/*.csv; do
             dvc add "$f"
           done
-          git add production_batches/*.dvc online_batches/.gitignore
+          git add online_batches/*.dvc online_batches/.gitignore
+          git commit -m "dvc: version new batch" || echo "Nothing to commit"
+          git push
