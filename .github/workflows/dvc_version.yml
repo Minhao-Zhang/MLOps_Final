@@ -1,0 +1,42 @@
+name: DVC version new batch
+
+on:
+  push:
+    paths:
+      - 'production_batches/*.csv'
+
+jobs:
+  dvc-add:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install DVC
+        run: pip install dvc
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: DVC init if needed
+        run: |
+          if [ ! -f .dvc/config ]; then
+            dvc init
+            git add .dvc
+            git commit -m "chore: init DVC"
+          fi
+
+      - name: DVC add new batches
+        run: |
+          for f in production_batches/*.csv; do
+            dvc add "$f"
+          done
+          git add production_batches/*.dvc production_batches/.gitignore
