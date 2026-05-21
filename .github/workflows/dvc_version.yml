@@ -36,11 +36,11 @@ jobs:
 
       - name: DVC add new batches
         run: |
+          dvc config core.autostage true
           for f in online_batches/*.csv; do
-            git rm --cached "$f"
+            git rm --cached "$f" 2>/dev/null || true
             dvc add "$f"
           done
-          echo "online_batches/*.csv" >> .gitignore
-          git add online_batches/*.dvc online_batches/.gitignore .gitignore
+          git add online_batches/
           git commit -m "dvc: version new batch" || echo "Nothing to commit"
           git push
