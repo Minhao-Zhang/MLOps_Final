@@ -36,7 +36,7 @@ jobs:
 
       - name: DVC add new batches
         run: |
-          for f in production_batches/*.csv; do
+          for f in online_batches/*.csv; do
             dvc add "$f"
           done
-          git add production_batches/*.dvc production_batches/.gitignore
+          git add production_batches/*.dvc online_batches/.gitignore
