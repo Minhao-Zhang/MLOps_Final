@@ -4,6 +4,7 @@ from github import Github
 from evidently import Dataset, DataDefinition, Report, Regression
 from evidently.presets import DataDriftPreset, RegressionPreset, DataSummaryPreset
 from evidently.ui.workspace import CloudWorkspace
+from pathlib import Path
 
 EVIDENTLY_TOKEN = os.environ["EVIDENTLY_API_TOKEN"]
 PROJECT_ID = os.environ["EVIDENTLY_PROJECT_ID"]
@@ -14,12 +15,14 @@ TARGET = "median_house_value"
 PREDICTION_COL = "prediction"
 REFERENCE_PATH = "reference_data.csv"  # path inside the repo
 
+REFERENCE_PATH = Path(__file__).parent.parent / "reference_data.csv"
+
 def _load_reference_from_github() -> pd.DataFrame:
-    g = Github(GITHUB_TOKEN)
-    repo = g.get_repo(REPO_NAME)
-    contents = repo.get_contents(REFERENCE_PATH)
-    import io, base64
-    csv_bytes = base64.b64decode(contents.content)
+    return pd.read_csv(REFERENCE_PATH)
+    
+    # contents.decoded_content handles the base64 decoding for you
+    import io
+    csv_bytes = contents.decoded_content
     return pd.read_csv(io.BytesIO(csv_bytes))
 
 def _build_schema(df: pd.DataFrame) -> DataDefinition:

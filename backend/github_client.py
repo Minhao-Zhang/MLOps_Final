@@ -6,7 +6,7 @@ from pathlib import Path
 
 GITHUB_TOKEN = os.environ["GITHUB_PAT"]
 REPO_NAME = os.environ["GITHUB_REPO"] 
-DATA_DIR = "online_batches"
+DATA_DIR = "production_batches"
 
 def push_df_to_github(df: pd.DataFrame, batch_name: str) -> str:
     g = Github(GITHUB_TOKEN)
