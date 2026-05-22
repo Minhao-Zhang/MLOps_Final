@@ -1,0 +1,5 @@
+outs:
+- md5: 68dda64ea404d2e818960e8e4b636d02
+  size: 258031
+  hash: md5
+  path: batch2_corrupted.csv

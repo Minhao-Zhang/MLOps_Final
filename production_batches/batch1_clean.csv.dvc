@@ -1,0 +1,5 @@
+outs:
+- md5: 6f9752dfc402064f8fad320a7d938618
+  size: 182716
+  hash: md5
+  path: batch1_clean.csv

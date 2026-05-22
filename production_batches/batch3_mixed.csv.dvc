@@ -1,0 +1,5 @@
+outs:
+- md5: 229f54fe3444941af5be190d744ed170
+  size: 220347
+  hash: md5
+  path: batch3_mixed.csv
